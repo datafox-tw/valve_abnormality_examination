@@ -1,0 +1,7 @@
+/nnssl_workdir/
+/nnUNet_preprocessed/
+/nnUNet_raw/
+/test/
+/train/
+/nnUNet_results/
+/inference_results/
