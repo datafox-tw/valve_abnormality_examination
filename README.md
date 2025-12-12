@@ -18,8 +18,19 @@ aicup25/
 │   └── patient0100.nii.gz
 ├── MAE.py
 ├── FT.py
+├── analyze_dataset.py
+├── visualize_data.py
+├── pipeline_generation.py
+
 ├── requirements.txt
 └── readme.md
+├── visualization_output/
+│   ├── dataset_analysis_report.txt
+│   ├── intensity_histogram.png
+│   ├── orthographic_slices.png
+│   ├── orthographic_slices_with_labels.png
+│   ├── pipeline_overview.png
+│   └── 3d_surface.png
 
 
 ```
@@ -123,4 +134,10 @@ aicup25/
     ```sh
     python3 MAE.py
     python3 FT.py
+    analyze_dataset.py
+    visualize_data.py
+    pipeline_generation.py
     ```
+analyze_dataset.py：整合整個資料庫的統計數據並繪製成圖檔
+visualize_data.py：分析單一資料並繪製切片狀態與整個心臟建模
+pipeline_generation.py：生成nnUNet的訓練流程描述
