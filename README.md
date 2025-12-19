@@ -39,7 +39,7 @@ aicup25/
 1. **Clone the repository:**
 
     ```sh
-    git clone git@github.com:kuanlee2001/aicup25.git
+    git clone git@github.com:Sebastian-0912/NTU_CVPDL_2025_FINAL.git
     
     git clone git@github.com:MIC-DKFZ/nnssl.git
     cd nnssl
