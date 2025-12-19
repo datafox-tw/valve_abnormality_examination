@@ -21,16 +21,14 @@ aicup25/
 ├── analyze_dataset.py
 ├── visualize_data.py
 ├── pipeline_generation.py
-
-├── requirements.txt
-└── readme.md
-├── visualization_output/
-│   ├── dataset_analysis_report.txt
-│   ├── intensity_histogram.png
-│   ├── orthographic_slices.png
-│   ├── orthographic_slices_with_labels.png
-│   ├── pipeline_overview.png
-│   └── 3d_surface.png
+├── readme.md
+└── visualization_output/
+    ├── dataset_analysis_report.txt
+    ├── intensity_histogram.png
+    ├── orthographic_slices.png
+    ├── orthographic_slices_with_labels.png
+    ├── pipeline_overview.png
+    └── 3d_surface.png
 
 
 ```
