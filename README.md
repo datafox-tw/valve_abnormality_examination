@@ -1,141 +1,98 @@
-# aicup25
-### datapath
+# 🫀 3D Cardiac Image Segmentation with Self-Supervised Learning (SSL)
+## AI Cup 2025: Heart Muscle Image Segmentation - Top 10% (Rank 56/568)
 
+[繁體中文版](./readme-chinese.md)
+
+[![AI Cup Rank](https://img.shields.io/badge/AI_Cup-Rank_56/568-blue.svg)](https://tbrain.trendmicro.com.tw/Competitions/Details/39)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/release/python-3100/)
+
+> This project implements a cutting-edge 3D medical image segmentation pipeline for cardiac anatomy, leveraging **Self-Supervised Learning (SSL)** to achieve state-of-the-art performance. The approach was validated in the **AI Cup 2025**, securing a position in the **Top 10%** among 568 competing teams.
+
+---
+
+## 📺 Project Presentation
+Watch our detailed project walkthrough and methodology presentation here:
+
+[![Watch the video](https://img.youtube.com/vi/yOSHRBcBeeA/0.jpg)](https://www.youtube.com/watch?v=yOSHRBcBeeA)
+
+---
+
+## 🌟 Highlights
+- **Performance**: Outperformed the strong nnU-Net baseline by ~3 Dice points.
+- **Methodology**: Advanced Masked Auto Encoder (MAE) pre-training for 3D CNNs.
+- **Architecture**: Residual Encoder U-Net within the nnU-Net framework.
+- **Dataset**: Pre-trained on 39,000 Brain MRI volumes; Fine-tuned on Cardiac CT/MRI.
+
+---
+
+## 📖 From Research to Replication (論文發想到復現)
+
+### Inspiration (論文啟發)
+Our work is heavily inspired by the CVPR 2025 paper:
+**"Revisiting MAE Pre-training for 3D Medical Image Segmentation"** (Wald et al.).
+
+The paper addresses three critical pitfalls in 3D medical SSL:
+1. **Small pre-training datasets**: Most studies use limited data.
+2. **Inadequate architectures**: Standard 2D or basic 3D CNNs often underperform.
+3. **Insufficient evaluation**: Lack of rigorous benchmarking.
+
+### Our Implementation Path (復現與應用流程)
+
+#### 1. Massive Pre-training (大規模預訓練)
+We leveraged a massive dataset of **39,000 3D Brain MRI volumes**. By using **Masked Auto Encoders (MAEs)**, the model learned high-level anatomical features by reconstructing missing parts of the 3D volume. This "self-supervised" phase allows the model to understand 3D spatial relationships without requiring expensive manual labels.
+
+我們利用了 **39,000 個 3D 腦部 MRI 影像** 進行大規模預訓練。透過 **Masked Auto Encoders (MAEs)** 技術，模型學會了從殘缺的影像中重建出完整的 3D 結構，從而掌握了深層的解剖學特徵。這種自監督學習（SSL）在大規模未標註數據上展現了極大的潛力。
+
+#### 2. Residual Encoder U-Net (架構優化)
+Instead of a standard U-Net, we integrated a **Residual Encoder U-Net** into the **nnU-Net** framework. This combines the robustness of nnU-Net's automated preprocessing with the powerful feature extraction of residual connections, specifically tailored for 3D medical image analysis.
+
+我們在 **nnU-Net** 框架中採用了 **Residual Encoder U-Net** 架構。這結合了 nnU-Net 強大的自動化預處理流程與殘差連接（Residual Connections）的特徵提取能力，專為 3D 醫療影像分割進行了優化。
+
+#### 3. Real-World Application: AI Cup (真實應用套用)
+We transferred the pre-trained weights to the task of **Heart Muscle Segmentation (Myocardium, LA, LV)** for the AI Cup 2025. 
+- **Result**: Our model achieved a **Top 10%** ranking (**56/568**).
+- **Impact**: The SSL approach provided a **~3 Dice point improvement** over the standard supervised baseline, demonstrating that pre-training on brain data significantly benefits cardiac segmentation.
+
+我們將預訓練好的權重遷移至 **AI Cup 2025 心臟肌肉影像分割** 任務中。最終在 568 支隊伍中脫穎而出，獲得 **第 56 名（前 10%）** 的佳績。實驗證明，相較於純監督式學習，自監督預訓練讓 Dice 系數提升了約 **3 個百分點**。
+
+---
+
+## 🛠 Project Components (專案組成)
+
+- **`MAE.py`**: Self-supervised pre-training using the `nnssl` framework.
+- **`FT.py`**: Task-specific fine-tuning on AI Cup cardiac data.
+- **`analyze_dataset.py` & `visualize_data.py`**: Quality assurance and 3D visualization tools.
+- **Reproduction Guide**: Detailed steps on environment setup and code patches: [REPRODUCTION.md](./REPRODUCTION.md)
+
+---
+
+## 🚀 Reproduction Quick Start (核心執行流程)
+
+For a step-by-step guide to installing dependencies and applying necessary patches, please refer to our **[Reproduction Guide](./REPRODUCTION.md)**.
+
+1. **Pre-training**: `python3 MAE.py`
+2. **Fine-tuning**: `python3 FT.py`
+3. **Validation**: `python3 visualize_data.py`
+
+---
+
+## 📜 Acknowledgements & References
+- T. Wald et al., "Revisiting MAE Pre-training for 3D Medical Image Segmentation," *CVPR*, 2025.
+- F. Isensee et al., "nnU-Net: a self-configuring method for deep learning-based biomedical image segmentation," *Nature Methods*, 2021.
+- AI Cup 2025 Organizers for providing the dataset and platform.
+
+---
+
+## 📁 Repository Structure
 ```
-aicup25/
-├── train/
-│   ├── imagesTr/
-│   │   ├── patient0001.nii.gz
-│   │   ├── ...
-│   │   └── patient0050.nii.gz
-│   └── labelsTr/
-│       ├── patient0001_gt.nii.gz
-│       ├── ...
-│       └── patient0050_gt.nii.gz
-├── test/
-│   ├── patient0051.nii.gz
-│   ├── ...
-│   └── patient0100.nii.gz
-├── MAE.py
-├── FT.py
-├── analyze_dataset.py
-├── visualize_data.py
-├── pipeline_generation.py
-├── readme.md
-└── visualization_output/
-    ├── dataset_analysis_report.txt
-    ├── intensity_histogram.png
-    ├── orthographic_slices.png
-    ├── orthographic_slices_with_labels.png
-    ├── pipeline_overview.png
-    └── 3d_surface.png
-
-
+.
+├── 📄 README.md                 # Main showcase
+├── 📄 REPRODUCTION.md           # Step-by-step setup and patches
+├── 📄 MAE.py                    # Pre-training script
+├── 📄 FT.py                     # Fine-tuning script
+├── 📄 analyze_dataset.py        # Data analysis tools
+├── 📄 visualize_data.py         # 3D/Slice visualization
+├── 📄 pipeline_generation.py    # Pipeline config generation
+└── 📁 ...                       # PDFs and other assets
 ```
-
-### Download and Installation
-1. **Clone the repository:**
-
-    ```sh
-    git clone git@github.com:Sebastian-0912/NTU_CVPDL_2025_FINAL.git
-    
-    git clone git@github.com:MIC-DKFZ/nnssl.git
-    cd nnssl
-    pip install -e .
-
-    git clone git@github.com:TaWald/nnUNet.git
-    cd nnUNet
-    pip install -e .
-
-    cd aicup25
-    ```
-
-2. **Fix Source code:**
-
-    ```sh
-    nnssl/src/nnssl/training/nnsslTrainer/masked_image_modeling/SparkTrainer.py
-
-    line 3
-    (add)
-    import dataclasses
-
-    line 131 (class SparkMAETrainer(BaseMAETrainer))
-    (add)
-    "nnssl_adaptation_plan": dataclasses.asdict(self.adaptation_plan)
-
-    line 260 (class SparkMAETrainer5epBS10(SparkMAETrainer5ep))
-    (fix)
-    # self.total_batch_size = 10
-    self.total_batch_size = 1
-
-    &&
-
-    nnUNet/nnunetv2/experiment_planning/experiment_planners/default_experiment_planner.py
-    line 457-463
-    (fix)
-    lowres_spacing = np.array(lowres_spacing)  # Ensure it's a NumPy array
-    if np.any((max_spacing / lowres_spacing) > 2):
-        # lowres_spacing = np.array(lowres_spacing)  # Ensure it's a NumPy array
-        max_spacing = np.max(lowres_spacing)
-        mask = (max_spacing / lowres_spacing) > 2
-        lowres_spacing[mask] *= spacing_increase_factor
-    else:
-        lowres_spacing *= spacing_increase_factor
-
-    &&
-    
-    nnUNet/nnunetv2/inference/predict_from_raw_data.py
-    line 104-111
-    (fix)
-            network = trainer_class.build_network_architecture(
-            architecture_class_name=configuration_manager.network_arch_class_name,
-            arch_init_kwargs=configuration_manager.network_arch_init_kwargs,
-            arch_init_kwargs_req_import=configuration_manager.network_arch_init_kwargs_req_import,
-            num_input_channels=num_input_channels,
-            num_output_channels=plans_manager.get_label_manager(dataset_json).num_segmentation_heads,
-            enable_deep_supervision=False
-        )
-
-    &&
-    
-    nnUNet/nnunetv2/training/nnUNetTrainer/pretraining/pretrainedTrainer.py
-    line 80
-    (fix)
-                    # input_patch_size=self.configuration_manager.patch_size,  # Set in plan to pt_recommended_patchsize
-
-    line 330
-    (fix)
-            # input_patch_size: tuple[int, int, int],
-
-    line 366
-    (add)
-            elif architecture_class_name in ["PrimusS", "PrimusM", "PrimusL", "PrimusB", "ResEncL"]:
-                if arch_init_kwargs is None:
-                    arch_init_kwargs = {}
-
-                # 防護 2: 嘗試讀取 patch_size，如果讀不到，給予預設值
-                # 注意：這裡假設是 (128, 128, 128)，這對大多數心臟分割任務是安全的
-                if 'patch_size' in arch_init_kwargs:
-                    input_patch_size = arch_init_kwargs['patch_size']
-                else:
-                    # 給一個「合理」的預設值以防止 Crash
-                    # 如果你的模型其實是 64x64x64 或其他尺寸，可以在這裡修改
-                    input_patch_size = (96, 160, 160) 
-                    print(f"Warning: patch_size missing in plans. Using default: {input_patch_size}")
-                network = get_network_from_name(
-                    architecture_class_name, ...)
-                ...
-    
-    ```
-3. **Excute:**
-
-    ```sh
-    python3 MAE.py
-    python3 FT.py
-    analyze_dataset.py
-    visualize_data.py
-    pipeline_generation.py
-    ```
-analyze_dataset.py：整合整個資料庫的統計數據並繪製成圖檔
-visualize_data.py：分析單一資料並繪製切片狀態與整個心臟建模
-pipeline_generation.py：生成nnUNet的訓練流程描述
